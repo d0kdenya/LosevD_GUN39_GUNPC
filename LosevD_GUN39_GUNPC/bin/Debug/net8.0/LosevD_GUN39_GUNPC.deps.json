@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "LosevD_GUN39_GUNPC/1.0.0": {
+        "runtime": {
+          "LosevD_GUN39_GUNPC.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "LosevD_GUN39_GUNPC/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
