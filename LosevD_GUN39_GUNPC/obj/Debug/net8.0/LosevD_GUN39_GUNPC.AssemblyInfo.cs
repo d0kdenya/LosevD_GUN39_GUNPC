@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LosevD_GUN39_GUNPC")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d00684d105dd4fa779d883c8b0be0d07ec4defd2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+25779c5436ca916934e128003c941f9c53da90b9")]
 [assembly: System.Reflection.AssemblyProductAttribute("LosevD_GUN39_GUNPC")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LosevD_GUN39_GUNPC")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

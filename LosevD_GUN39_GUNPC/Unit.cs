@@ -11,7 +11,7 @@
 
       public string Name { get; }
 
-      public int Damage { get; }
+      public Interval Damage { get; }
 
       public float Armor { get; }
 
@@ -22,7 +22,15 @@
       public Unit(string name)
       {
          Name = name;
-         Damage = 5;
+         Damage = new Interval(0, 5);
+         Armor = 0.6f;
+         _health = 20;
+      }
+
+      public Unit(string name, int minDamage, int maxDamage)
+      {
+         Name = name;
+         Damage = new Interval(minDamage, maxDamage);
          Armor = 0.6f;
          _health = 20;
       }

@@ -4,9 +4,7 @@
    {
       public string Name { get; }
 
-      public int MinDamage { get; private set; }
-
-      public int MaxDamage { get; private set; }
+      public Interval Damage { get; private set; }
 
       public float Durability { get; }
 
@@ -44,13 +42,12 @@
             Console.WriteLine("Некорректные входные данные для оружия = {0}!", Name);
          }
 
-         MinDamage = minDamage;
-         MaxDamage = maxDamage;
+         Damage = new Interval(minDamage, maxDamage);
       }
 
       public int GetDamage()
       {
-         return (MinDamage + MaxDamage) / 2;
+         return (Damage.Min + Damage.Max) / 2;
       }
    }
 }
