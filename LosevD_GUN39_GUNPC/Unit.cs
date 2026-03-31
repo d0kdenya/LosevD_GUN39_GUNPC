@@ -2,30 +2,18 @@
 {
    internal class Unit
    {
-      private string _name;
       private float _health;
-      private int _damage;
-      private float _armor;
-
-      public string Name
-      {
-         get => _name;
-      }
 
       public float Health
       {
          get => _health;
       }
 
-      public int Damage
-      {
-         get => _damage;
-      }
+      public string Name { get; }
 
-      public float Armor
-      {
-         get => _armor;
-      }
+      public int Damage { get; }
+
+      public float Armor { get; }
 
       public Unit() : this("Unknown Unit")
       {
@@ -33,9 +21,9 @@
 
       public Unit(string name)
       {
-         _name = name;
-         _damage = 5;
-         _armor = 0.6f;
+         Name = name;
+         Damage = 5;
+         Armor = 0.6f;
          _health = 20;
       }
 
@@ -44,11 +32,9 @@
          return Health * (1f + Armor);
       }
 
-      public bool SetDamage(int value)
+      public bool SetDamage(int damage)
       {
-         float realDamage = value * Armor;
-
-         _health = Health - realDamage;
+         _health -= damage * Armor;
 
          return Health <= 0f;
       }

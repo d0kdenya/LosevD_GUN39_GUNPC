@@ -2,37 +2,18 @@
 {
    internal class Weapon
    {
-      private string _name;
-      private int _minDamage;
-      private int _maxDamage;
-      private float _durability;
+      public string Name { get; }
 
-      public string Name
-      {
-         get => _name;
-      }
+      public int MinDamage { get; private set; }
 
-      public int MinDamage
-      {
-         get => _minDamage;
-         private set => _minDamage = value;
-      }
+      public int MaxDamage { get; private set; }
 
-      public int MaxDamage
-      {
-         get => _maxDamage;
-         private set => _maxDamage = value;
-      }
-
-      public float Durability
-      {
-         get => _durability;
-      }
+      public float Durability { get; }
 
       public Weapon(string name)
       {
-         _name = name;
-         _durability = 1f;
+         Name = name;
+         Durability = 1f;
       }
 
       public Weapon(string name, int minDamage, int maxDamage) : this(name)
