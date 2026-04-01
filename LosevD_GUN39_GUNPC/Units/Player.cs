@@ -18,6 +18,11 @@ namespace LosevD_GUN39_GUNPC.Units
       {
          if (_equipment.TryGetValue(EquipSlot.Weapon, out var item) && item is Weapon weapon)
          {
+            weapon.Durability--;
+            if (weapon.Durability == 0)
+            {
+               RemoveItemFromInventory(weapon);
+            }
             return BaseDamage + weapon.Damage;
          }
          return BaseDamage;
@@ -26,6 +31,8 @@ namespace LosevD_GUN39_GUNPC.Units
       public override void HandleCombatComplete()
       {
          var items = Inventory.Items;
+
+         base.AddItemToInventory(new GrindStone(GameConstants.Grindstone));
 
          for (var i = 0; i < items.Count; i++)
          {
@@ -51,6 +58,11 @@ namespace LosevD_GUN39_GUNPC.Units
       {
          if (_equipment.TryGetValue(EquipSlot.Armour, out var item) && item is Armour armour)
          {
+            armour.Durability--;
+            if (armour.Durability == 0)
+            {
+               RemoveItemFromInventory(armour);
+            }
             damage -= (uint)(damage * (armour.Defence / 100f));
          }   
          return damage;
@@ -62,6 +74,23 @@ namespace LosevD_GUN39_GUNPC.Units
          {
             Health += healthPortion.HealthRestore;
          }
+         if (economicItem is GrindStone grindStone)
+         {
+            foreach(var kvp in _equipment)
+            {
+               kvp.Value.Repair(grindStone.GrindPower);
+            }
+         }
+      }
+
+      public override void RemoveItemFromInventory(Item item)
+      {
+         if (item is EquipItem equipItem && _equipment.TryGetValue(equipItem.Slot, out EquipItem value))
+         {
+            _equipment.Remove(equipItem.Slot);
+            Console.WriteLine($"[{equipItem.Slot}] was broken!");
+         }
+         base.RemoveItemFromInventory(item);
       }
 
       public override string ToString()

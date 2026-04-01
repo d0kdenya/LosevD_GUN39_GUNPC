@@ -66,7 +66,7 @@ namespace LosevD_GUN39_GUNPC.Combat
                ApplyDamage(enemy, player);
                break;
             default:
-               Console.WriteLine("Ccombatants tried to hit, but missed :(");
+               Console.WriteLine("Combatants tried to hit, but missed :(");
                break;
          }
       }

@@ -63,6 +63,14 @@ namespace LosevD_GUN39_GUNPC.Units
          }
       }
 
+      public virtual void RemoveItemFromInventory(Item item)
+      {
+         if (Inventory.TryRemove(item))
+         {
+            Console.WriteLine($"Item {Name} was removed!");
+         }
+      }
+
       public void AddItemsFromUnitToInventory(Unit unit)
       {
          for (int i = 0; i < unit.Inventory.Items.Count; i++)

@@ -8,8 +8,11 @@ namespace LosevD_GUN39_GUNPC.Utils
       public static Unit CreatePlayer(string name)
       {
          Player player = new Player(name, 30, 30, 6);
-         player.AddItemToInventory(new Weapon(10, 15, "Sword"));
-         player.AddItemToInventory(new Armour(10, 15, "Armour"));
+
+         Weapon weapon = new Weapon(10, 15, "Sword");
+         Armour armour = new Armour(10, 15, "Armour");
+         player.AddItemToInventory(weapon);
+         player.AddItemToInventory(armour);
          return player;
       }
 
