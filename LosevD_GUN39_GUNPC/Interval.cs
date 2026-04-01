@@ -16,14 +16,14 @@
          {
             minValue = 0;
 
-            Console.WriteLine("Некорректные входные данные! minValue должно быть >= 0!");
+            Console.WriteLine("Форсированная установка минимального значения! minValue должно быть >= 0!");
          }
 
          if (maxValue < 0)
          {
             maxValue = 0;
 
-            Console.WriteLine("Некорректные входные данные! maxValue должно быть >= 0!");
+            Console.WriteLine("Форсированная установка максимального значения! maxValue должно быть >= 0!");
          }
 
          if (minValue > maxValue)
