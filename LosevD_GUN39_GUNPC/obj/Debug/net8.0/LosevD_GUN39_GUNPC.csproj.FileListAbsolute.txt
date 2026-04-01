@@ -1,0 +1,15 @@
+D:\Portfolio\LosevD_GUN39_GUNPC\LosevD_GUN39_GUNPC\obj\Debug\net8.0\LosevD_GUN39_GUNPC.GeneratedMSBuildEditorConfig.editorconfig
+D:\Portfolio\LosevD_GUN39_GUNPC\LosevD_GUN39_GUNPC\obj\Debug\net8.0\LosevD_GUN39_GUNPC.AssemblyInfoInputs.cache
+D:\Portfolio\LosevD_GUN39_GUNPC\LosevD_GUN39_GUNPC\obj\Debug\net8.0\LosevD_GUN39_GUNPC.AssemblyInfo.cs
+D:\Portfolio\LosevD_GUN39_GUNPC\LosevD_GUN39_GUNPC\obj\Debug\net8.0\LosevD_GUN39_GUNPC.csproj.CoreCompileInputs.cache
+D:\Portfolio\LosevD_GUN39_GUNPC\LosevD_GUN39_GUNPC\obj\Debug\net8.0\LosevD_GUN39_GUNPC.sourcelink.json
+D:\Portfolio\LosevD_GUN39_GUNPC\LosevD_GUN39_GUNPC\bin\Debug\net8.0\LosevD_GUN39_GUNPC.exe
+D:\Portfolio\LosevD_GUN39_GUNPC\LosevD_GUN39_GUNPC\bin\Debug\net8.0\LosevD_GUN39_GUNPC.deps.json
+D:\Portfolio\LosevD_GUN39_GUNPC\LosevD_GUN39_GUNPC\bin\Debug\net8.0\LosevD_GUN39_GUNPC.runtimeconfig.json
+D:\Portfolio\LosevD_GUN39_GUNPC\LosevD_GUN39_GUNPC\bin\Debug\net8.0\LosevD_GUN39_GUNPC.dll
+D:\Portfolio\LosevD_GUN39_GUNPC\LosevD_GUN39_GUNPC\bin\Debug\net8.0\LosevD_GUN39_GUNPC.pdb
+D:\Portfolio\LosevD_GUN39_GUNPC\LosevD_GUN39_GUNPC\obj\Debug\net8.0\LosevD_GUN39_GUNPC.dll
+D:\Portfolio\LosevD_GUN39_GUNPC\LosevD_GUN39_GUNPC\obj\Debug\net8.0\refint\LosevD_GUN39_GUNPC.dll
+D:\Portfolio\LosevD_GUN39_GUNPC\LosevD_GUN39_GUNPC\obj\Debug\net8.0\LosevD_GUN39_GUNPC.pdb
+D:\Portfolio\LosevD_GUN39_GUNPC\LosevD_GUN39_GUNPC\obj\Debug\net8.0\LosevD_GUN39_GUNPC.genruntimeconfig.cache
+D:\Portfolio\LosevD_GUN39_GUNPC\LosevD_GUN39_GUNPC\obj\Debug\net8.0\ref\LosevD_GUN39_GUNPC.dll
