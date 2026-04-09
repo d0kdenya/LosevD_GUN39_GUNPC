@@ -1,9 +1,12 @@
 ﻿using LosevD_GUN39_GUNPC.Items;
+using System.Text;
 
 namespace LosevD_GUN39_GUNPC.Units
 {
    public abstract class Unit
    {
+      public event Action OnDeath;
+
       private const int INVENTORY_SIZE = 3;
 
       private uint _health;
@@ -45,6 +48,11 @@ namespace LosevD_GUN39_GUNPC.Units
             _health -= damageApplied;
          }
          DamageReceiveHandler();
+
+         if (_health == 0 && OnDeath != null)
+         {
+            OnDeath();
+         }
       }
 
       protected abstract uint CalculateAppliedDamage(uint damage);
@@ -81,6 +89,23 @@ namespace LosevD_GUN39_GUNPC.Units
                return;
             }
          }
+      }
+
+      public virtual IReadOnlyList<Item> GetInventory()
+      {
+         return Inventory.Items;
+      }
+
+      public virtual Item GetInventoryItem(int index)
+      {
+         var items = Inventory.Items;
+
+         if (index < items.Count + 1 || items.Count == 0)
+         {
+            Console.WriteLine("Wrong index!\n");
+            return null;
+         }
+         return items[index - 1];
       }
    }
 }

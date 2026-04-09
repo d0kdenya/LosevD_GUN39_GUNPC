@@ -7,16 +7,22 @@ namespace LosevD_GUN39_GUNPC.Game
 {
    public sealed class GameLoop
    {
+      private bool _quitGame;
+
       private Unit _player;
 
       private DungeonRoom _dungeon;
+
+      private DungeonRoom _currentRoom;
+
+      private CommandParser _parser = new CommandParser();
 
       private readonly CombatManager _combatManager = new CombatManager();
 
       public void StartGame()
       {
          Initialize();
-         Console.WriteLine("Entering the dungeon");
+         Console.WriteLine("Entering the dungeon...\n");
          StartGameLoop();
       }
 
@@ -26,37 +32,75 @@ namespace LosevD_GUN39_GUNPC.Game
       {
          Console.WriteLine("Welcome, player!");
          _dungeon = DungeonBuilder.BuildDungeon();
-         Console.WriteLine("Enter your name");
+         Console.Write("Enter your name: ");
          _player = UnitFactoryDemo.CreatePlayer(Console.ReadLine());
-         Console.WriteLine($"Hello {_player.Name}");
+         Console.WriteLine($"Hello {_player.Name}\n");
+
+         _currentRoom = _dungeon;
       }
 
       private void StartGameLoop()
       {
-         var currentRoom = _dungeon;
-
-         while (currentRoom.IsFinal == false)
+         while (!_currentRoom.IsFinal && !_quitGame)
          {
-            StartRoomEncounter(currentRoom, out var success);
+            StartRoomEncounter(_currentRoom, out var success);
             if (!success)
             {
-               Console.WriteLine("Game over!");
                return;
             }
-            DisplayRouteOptions(currentRoom);
             while (true)
             {
-               if (Enum.TryParse<Direction>(Console.ReadLine(), out var direction))
+               DisplayRouteOptions(_currentRoom);
+
+               var line = Console.ReadLine() ?? "";
+
+               if (_parser.TryDispatch(line, out CommandResult commandResult, out string args))
                {
-                  currentRoom = currentRoom.Rooms[direction];
-                  break;
+                  switch (commandResult)
+                  {
+                     case CommandResult.Info:
+                        GameCommands.PrintPlayerInfo(_player);
+                        break;
+                     case CommandResult.Inventory:
+                        if (int.TryParse(args, out int index))
+                        {
+                           GameCommands.PrintPlayerInventory(_player, index);
+                        }
+                        else
+                        {
+                           GameCommands.PrintPlayerInventory(_player, -1);
+                        }
+                        break;
+                     case CommandResult.Go:
+                        if (!GameCommands.TryGoNextRoom(ref _currentRoom, args))
+                        {
+                           continue;
+                        }
+                        break;
+                     case CommandResult.Quit:
+                        GameCommands.PrintGameOver(_player);
+                        _quitGame = true;
+                        return;
+                     default:
+                        Console.WriteLine("\nUnknown command!\n");
+                        break;
+                  }
                }
                else
                {
-                  Console.WriteLine("Wrong direction!");
+                  if (GameCommands.TryGoNextRoom(ref _currentRoom, line))
+                  {
+                     break;
+                  }
                }
             }
          }
+
+         if (_quitGame)
+         {
+            return;
+         }
+
          Console.WriteLine($"Congratulations, {_player.Name}");
          Console.WriteLine("Result: ");
          Console.WriteLine(_player.ToString());
@@ -71,10 +115,22 @@ namespace LosevD_GUN39_GUNPC.Game
          }
          if (currentRoom.Enemy != null)
          {
-            if (_combatManager.StartCombat(_player, currentRoom.Enemy) == _player)
+            CombatResult result = _combatManager.StartCombat(_player, currentRoom.Enemy, _parser, out string direction);
+
+            if (result == CombatResult.PlayerWon)
             {
                _player.HandleCombatComplete();
                LootEnemy(currentRoom.Enemy);
+            }
+            else if (result == CombatResult.Escaped)
+            {
+               GameCommands.TryGoNextRoom(ref _currentRoom, direction);
+            }
+            else if (result == CombatResult.QuitGame)
+            {
+               GameCommands.PrintGameOver(_player);
+               _quitGame = true;
+               success = false;
             }
             else
             {
@@ -90,12 +146,13 @@ namespace LosevD_GUN39_GUNPC.Game
 
       private void DisplayRouteOptions(DungeonRoom currentRoom)
       {
-         Console.WriteLine("Where to go?");
+         Console.WriteLine("\nWhere to go?");
 
          foreach (var room in currentRoom.Rooms)
          {
             Console.Write($"{room.Key} - {(int)room.Key}\t");
          }
+         Console.Write(" Your choice: ");
       }
 
       #endregion

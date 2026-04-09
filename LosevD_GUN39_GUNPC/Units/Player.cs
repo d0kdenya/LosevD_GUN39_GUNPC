@@ -10,6 +10,8 @@ namespace LosevD_GUN39_GUNPC.Units
    {
       private readonly Dictionary<EquipSlot, EquipItem> _equipment = new();
 
+      private readonly Random _random = new();
+
       public Player(string name, uint health, uint maxHealth, uint baseDamage) : base(name, health, maxHealth, baseDamage)
       {
       }
@@ -23,7 +25,7 @@ namespace LosevD_GUN39_GUNPC.Units
             {
                RemoveItemFromInventory(weapon);
             }
-            return BaseDamage + weapon.Damage;
+            return BaseDamage + (uint)_random.Next((int) weapon.Damage, (int) weapon.MaxDamage);
          }
          return BaseDamage;
       }
@@ -93,6 +95,20 @@ namespace LosevD_GUN39_GUNPC.Units
          base.RemoveItemFromInventory(item);
       }
 
+      public override Item GetInventoryItem(int index)
+      {
+         return base.GetInventoryItem(index);
+      }
+
+      public void ShowInventory(StringBuilder builder)
+      {
+         var items = Inventory.Items;
+         for (int i = 0; i < items.Count; i++)
+         {
+            builder.Append($"[{items[i].Name}] : {items[i].Amount}");
+         }
+      }
+
       public override string ToString()
       {
          StringBuilder builder = new StringBuilder();
@@ -100,11 +116,8 @@ namespace LosevD_GUN39_GUNPC.Units
          builder.AppendLine($"Health {Health}/{MaxHealth}");
          builder.AppendLine("Loot: ");
 
-         var items = Inventory.Items;
-         for (int i = 0; i < items.Count; i++)
-         {
-            builder.Append($"[{items[i].Name}] : {items[i].Amount}");
-         }
+         ShowInventory(builder);
+
          return builder.ToString();
       }
    }

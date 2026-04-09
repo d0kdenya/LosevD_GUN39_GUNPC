@@ -1,4 +1,6 @@
-﻿using LosevD_GUN39_GUNPC.Units;
+﻿using LosevD_GUN39_GUNPC.Dungeon;
+using LosevD_GUN39_GUNPC.Units;
+using LosevD_GUN39_GUNPC.Utils;
 
 namespace LosevD_GUN39_GUNPC.Combat
 {
@@ -6,40 +8,82 @@ namespace LosevD_GUN39_GUNPC.Combat
    {
       private readonly Random _random = new();
 
-      public Unit StartCombat(Unit player, Unit enemy) => PlayCombatRoutine(player, enemy);
+      public CombatResult StartCombat(Unit player, Unit enemy, CommandParser parser, out string direction) => PlayCombatRoutine(player, enemy, parser, out direction);
 
-      private Unit PlayCombatRoutine(Unit player, Unit enemy)
+      private CombatResult PlayCombatRoutine(Unit player, Unit enemy, CommandParser parser, out string direction)
       {
-         Console.WriteLine(GetCombatString());
+         direction = "";
+
          while (player.Health > 0 && enemy.Health > 0)
          {
-            if (Enum.TryParse<RockPaperScissors>(Console.ReadLine(), out var rockPaperScissors))
+            Console.WriteLine(GetCombatString());
+            Console.Write("Your choice: ");
+
+            var line = Console.ReadLine() ?? "";
+
+            if (!parser.TryDispatch(line, out CommandResult commandResult, out string args))
             {
-               HandleCombatInput(player, enemy, rockPaperScissors);
+               if (Enum.TryParse<RockPaperScissors>(line, out var rockPaperScissors))
+               {
+                  HandleCombatInput(player, enemy, rockPaperScissors);
+               }
+               else
+               {
+                  Console.WriteLine(GetCombatString());
+               }
             }
-            else
+            else if (commandResult != CommandResult.ErrorCommand)
             {
-               Console.WriteLine(GetCombatString());
+               switch (commandResult)
+               {
+                  case CommandResult.Info:
+                     GameCommands.PrintPlayerInfo(player);
+                     break;
+                  case CommandResult.Inventory:
+                     if (int.TryParse(args, out int index))
+                     {
+                        GameCommands.PrintPlayerInventory(player, index);
+                     }
+                     else
+                     {
+                        GameCommands.PrintPlayerInventory(player, -1);
+                     }
+                     break;
+                  case CommandResult.Go:
+                     if (TryToEscapeFromBattle())
+                     {
+                        direction = args;
+                        return CombatResult.Escaped;
+                     }
+                     else
+                     {
+                        break;
+                     }
+                  case CommandResult.Quit:
+                     return CombatResult.QuitGame;
+                  default:
+                     break;
+               }
             }
          }
          if (player.Health > 0 && enemy.Health == 0)
          {
-            return player;
+            return CombatResult.PlayerWon;
          }
          if (player.Health == 0 && enemy.Health > 0)
          {
-            return enemy;
+            return CombatResult.EnemyWon;
          }
-         return null;
+         return CombatResult.UnknownResult;
       }
 
-      private string GetCombatString() => $"Type {RockPaperScissors.Rock} = {(int)RockPaperScissors.Rock}" +
+      private string GetCombatString() => $"\nType {RockPaperScissors.Rock} = {(int)RockPaperScissors.Rock}" +
          $" or {RockPaperScissors.Paper} = {(int)RockPaperScissors.Paper}" +
          $" or {RockPaperScissors.Scissors} = {(int)RockPaperScissors.Scissors}";
 
       private void HandleCombatInput(Unit player, Unit enemy, RockPaperScissors rockPaperScissors)
       {
-         var enemyInput = (RockPaperScissors)_random.Next(1, 3);
+         var enemyInput = (RockPaperScissors)_random.Next(1, 4);
 
          Console.WriteLine($"Result player = {rockPaperScissors} and enemy = {enemyInput}");
 
@@ -79,6 +123,25 @@ namespace LosevD_GUN39_GUNPC.Combat
          if (defender.Health == 0)
          {
             Console.WriteLine($"{defender.Name} is dead!");
+         }
+      }
+
+      private bool TryToEscapeFromBattle()
+      {
+         Console.WriteLine("Rolling your escape (33% chance)...");
+         int roll = _random.Next(0, 20);
+
+         Console.WriteLine($"Your roll from 0 to 20 = {roll}");
+
+         if (roll == 0 || roll % 3 == 0)
+         {
+            return true;
+            
+         }
+         else
+         {
+            Console.WriteLine("You can't escape! Continue battle :(");
+            return false;
          }
       }
    }

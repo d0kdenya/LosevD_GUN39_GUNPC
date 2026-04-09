@@ -9,10 +9,14 @@ namespace LosevD_GUN39_GUNPC.Utils
       {
          Player player = new Player(name, 30, 30, 6);
 
-         Weapon weapon = new Weapon(10, 15, "Sword");
+         Weapon weapon = new Weapon(8, 15, 15, "Sword");
          Armour armour = new Armour(10, 15, "Armour");
+
+         player.OnDeath += () => Console.WriteLine("Game over!");
+
          player.AddItemToInventory(weapon);
          player.AddItemToInventory(armour);
+
          return player;
       }
 
