@@ -118,15 +118,14 @@ namespace LosevD_GUN39_GUNPC.Units
 
       public override void RemoveItemFromInventory(Item item)
       {
-         if (item is EquipItem equipItem && _equipment.TryGetValue(equipItem.Slot, out EquipItem value))
+         if (item is EquipItem equipItem && _equipment.Remove(equipItem.Slot))
          {
-            _equipment.Remove(equipItem.Slot);
             Console.WriteLine($"[{equipItem.Slot}] was broken!");
          }
          base.RemoveItemFromInventory(item);
       }
 
-      public override Item GetInventoryItem(int index)
+      public override Item? GetInventoryItem(int index)
       {
          return base.GetInventoryItem(index);
       }
@@ -151,9 +150,9 @@ namespace LosevD_GUN39_GUNPC.Units
       {
          EquipSlot slot = newItem.Slot;
 
-         if (_equipment.TryGetValue(slot, out EquipItem item))
+         if (_equipment.TryGetValue(slot, out EquipItem? existing))
          {
-            Console.Write($"Item was replaced from {_equipment[slot].Name} ");
+            Console.Write($"Item was replaced from {existing.Name} ");
             _equipment[slot] = newItem;
             Console.Write($"to {newItem.Name}!");
          }

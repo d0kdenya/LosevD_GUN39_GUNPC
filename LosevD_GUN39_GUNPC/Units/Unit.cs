@@ -5,7 +5,7 @@ namespace LosevD_GUN39_GUNPC.Units
 {
    public abstract class Unit
    {
-      public event Action OnDeath;
+      public event Action? OnDeath;
 
       private const int INVENTORY_SIZE = 3;
 
@@ -49,9 +49,9 @@ namespace LosevD_GUN39_GUNPC.Units
          }
          DamageReceiveHandler();
 
-         if (_health == 0 && OnDeath != null)
+         if (_health == 0)
          {
-            OnDeath();
+            OnDeath?.Invoke();
          }
       }
 
@@ -96,11 +96,11 @@ namespace LosevD_GUN39_GUNPC.Units
          return Inventory.Items;
       }
 
-      public virtual Item GetInventoryItem(int index)
+      public virtual Item? GetInventoryItem(int index)
       {
          var items = Inventory.Items;
 
-         if (index < items.Count + 1 || items.Count == 0)
+         if (items.Count == 0 || index < 1 || index > items.Count)
          {
             Console.WriteLine("Wrong index!\n");
             return null;

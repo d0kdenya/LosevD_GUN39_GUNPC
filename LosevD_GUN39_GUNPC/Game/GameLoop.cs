@@ -12,11 +12,11 @@ namespace LosevD_GUN39_GUNPC.Game
    {
       private bool _quitGame;
 
-      private Unit _player;
+      private Unit _player = null!;
 
-      private DungeonRoom _dungeon;
+      private DungeonRoom _dungeon = null!;
 
-      private DungeonRoom _currentRoom;
+      private DungeonRoom _currentRoom = null!;
 
       private CommandParser _parser = new CommandParser();
 
@@ -36,7 +36,7 @@ namespace LosevD_GUN39_GUNPC.Game
          Console.WriteLine("Welcome, player!");
          Console.Write("Enter your name: ");
 
-         string name = Console.ReadLine();
+         string? name = Console.ReadLine();
 
          Console.WriteLine("Choose Difficult: ");
          Console.WriteLine("1 - Easy;");
@@ -139,26 +139,27 @@ namespace LosevD_GUN39_GUNPC.Game
       private void StartRoomEncounter(DungeonRoom currentRoom, out bool success)
       {
          success = true;
-         if (currentRoom.Loot != null)
+         if (currentRoom.Loot.Count > 0)
          {
-            var loot = currentRoom.Loot;
-
-            if (loot is EquipItem equipItem)
+            foreach(var loot in currentRoom.Loot)
             {
-               Console.Write($"\nYou find a {loot.Name}! Input y to equip it else you skip it: ");
-               var line = Console.ReadLine() ?? "";
-
-               if (line.ToLower().Equals("y"))
+               if (loot is EquipItem equipItem)
                {
-                  if (_player is Player player)
+                  Console.Write($"\nYou find a {loot.Name}! Input y to equip it else you skip it: ");
+                  var line = Console.ReadLine() ?? "";
+
+                  if (line.ToLower().Equals("y"))
                   {
-                     player.EquipOrReplace(equipItem);
+                     if (_player is Player player)
+                     {
+                        player.EquipOrReplace(equipItem);
+                     }
                   }
                }
-            }
-            else
-            {
-               _player.AddItemToInventory(currentRoom.Loot);
+               else
+               {
+                  _player.AddItemToInventory(loot);
+               }
             }
          }
          if (currentRoom.Enemy != null)

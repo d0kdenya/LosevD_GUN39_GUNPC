@@ -15,7 +15,10 @@ namespace LosevD_GUN39_GUNPC.Utils
          if (index != -1)
          {
             var item = player.GetInventoryItem(index);
-            Console.WriteLine($"Item: {item.Name}, Amount: {item.Amount}");
+            if (item != null)
+            {
+               Console.WriteLine($"Item: {item.Name}, Amount: {item.Amount}");
+            }
          }
          else
          {

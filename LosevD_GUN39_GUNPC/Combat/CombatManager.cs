@@ -129,7 +129,7 @@ namespace LosevD_GUN39_GUNPC.Combat
       private bool TryToEscapeFromBattle()
       {
          Console.WriteLine("Rolling your escape (33% chance)...");
-         int roll = _random.Next(0, 20);
+         int roll = _random.Next(0, 21);
 
          Console.WriteLine($"Your roll from 0 to 20 = {roll}");
 
