@@ -1,5 +1,7 @@
-﻿using LosevD_GUN39_GUNPC.Combat;
+﻿using LosevD_GUN39_GUNPC.Builders;
+using LosevD_GUN39_GUNPC.Combat;
 using LosevD_GUN39_GUNPC.Dungeon;
+using LosevD_GUN39_GUNPC.Interfaces;
 using LosevD_GUN39_GUNPC.Items.EquipItems;
 using LosevD_GUN39_GUNPC.Units;
 using LosevD_GUN39_GUNPC.Utils;
@@ -32,9 +34,36 @@ namespace LosevD_GUN39_GUNPC.Game
       private void Initialize()
       {
          Console.WriteLine("Welcome, player!");
-         _dungeon = DungeonBuilder.BuildDungeon();
          Console.Write("Enter your name: ");
-         _player = UnitFactoryDemo.CreatePlayer(Console.ReadLine());
+
+         string name = Console.ReadLine();
+
+         Console.WriteLine("Choose Difficult: ");
+         Console.WriteLine("1 - Easy;");
+         Console.WriteLine("2 - Medium;");
+         Console.WriteLine("3 - Hard.");
+         Console.Write("Your choice (default Easy): ");
+
+         var line = Console.ReadLine();
+         Difficulty difficulty = Difficulty.Easy;
+
+         if (int.TryParse(line, out int choice))
+         {
+            difficulty = choice switch
+            {
+               1 => Difficulty.Easy,
+               2 => Difficulty.Medium,
+               3 => Difficulty.Hard,
+               _ => Difficulty.Easy,
+            };
+         }
+
+         var resolver = new GameSetupResolver();
+         GameSetup setup = resolver.Resolve(difficulty);
+
+         _player = setup.UnitFactory.CreatePlayer(name ?? "Hero");
+         _dungeon = setup.DungeonBuilder.BuildDungeon(setup.UnitFactory);
+
          Console.WriteLine($"Hello {_player.Name}\n");
 
          _currentRoom = _dungeon;

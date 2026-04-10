@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "d:\\Portfolio\\LosevD_GUN39_GUNPC\\LosevD_GUN39_GUNPC\\LosevD_GUN39_GUNPC.csproj": {}
+    "D:\\Portfolio\\LosevD_GUN39_GUNPC\\LosevD_GUN39_GUNPC\\LosevD_GUN39_GUNPC.csproj": {}
   },
   "projects": {
-    "d:\\Portfolio\\LosevD_GUN39_GUNPC\\LosevD_GUN39_GUNPC\\LosevD_GUN39_GUNPC.csproj": {
+    "D:\\Portfolio\\LosevD_GUN39_GUNPC\\LosevD_GUN39_GUNPC\\LosevD_GUN39_GUNPC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\Portfolio\\LosevD_GUN39_GUNPC\\LosevD_GUN39_GUNPC\\LosevD_GUN39_GUNPC.csproj",
+        "projectUniqueName": "D:\\Portfolio\\LosevD_GUN39_GUNPC\\LosevD_GUN39_GUNPC\\LosevD_GUN39_GUNPC.csproj",
         "projectName": "LosevD_GUN39_GUNPC",
-        "projectPath": "d:\\Portfolio\\LosevD_GUN39_GUNPC\\LosevD_GUN39_GUNPC\\LosevD_GUN39_GUNPC.csproj",
+        "projectPath": "D:\\Portfolio\\LosevD_GUN39_GUNPC\\LosevD_GUN39_GUNPC\\LosevD_GUN39_GUNPC.csproj",
         "packagesPath": "C:\\Users\\dende\\.nuget\\packages\\",
-        "outputPath": "d:\\Portfolio\\LosevD_GUN39_GUNPC\\LosevD_GUN39_GUNPC\\obj\\",
+        "outputPath": "D:\\Portfolio\\LosevD_GUN39_GUNPC\\LosevD_GUN39_GUNPC\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
