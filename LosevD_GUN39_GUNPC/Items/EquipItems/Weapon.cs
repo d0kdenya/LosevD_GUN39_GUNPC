@@ -2,7 +2,7 @@
 
 namespace LosevD_GUN39_GUNPC.Items.EquipItems
 {
-   public sealed class Weapon : EquipItem
+   public class Weapon : EquipItem
    {
       public uint Damage { get; }
       public uint MaxDamage { get; }

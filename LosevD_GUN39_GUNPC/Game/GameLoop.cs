@@ -1,5 +1,6 @@
 ﻿using LosevD_GUN39_GUNPC.Combat;
 using LosevD_GUN39_GUNPC.Dungeon;
+using LosevD_GUN39_GUNPC.Items.EquipItems;
 using LosevD_GUN39_GUNPC.Units;
 using LosevD_GUN39_GUNPC.Utils;
 
@@ -111,7 +112,25 @@ namespace LosevD_GUN39_GUNPC.Game
          success = true;
          if (currentRoom.Loot != null)
          {
-            _player.AddItemToInventory(currentRoom.Loot);
+            var loot = currentRoom.Loot;
+
+            if (loot is EquipItem equipItem)
+            {
+               Console.Write($"\nYou find a {loot.Name}! Input y to equip it else you skip it: ");
+               var line = Console.ReadLine() ?? "";
+
+               if (line.ToLower().Equals("y"))
+               {
+                  if (_player is Player player)
+                  {
+                     player.EquipOrReplace(equipItem);
+                  }
+               }
+            }
+            else
+            {
+               _player.AddItemToInventory(currentRoom.Loot);
+            }
          }
          if (currentRoom.Enemy != null)
          {

@@ -18,14 +18,32 @@ namespace LosevD_GUN39_GUNPC.Units
 
       public override uint GetUnitDamage()
       {
-         if (_equipment.TryGetValue(EquipSlot.Weapon, out var item) && item is Weapon weapon)
+         uint damage = 0;
+
+         if (_equipment.TryGetValue(EquipSlot.Weapon, out var item))
          {
-            weapon.Durability--;
-            if (weapon.Durability == 0)
+            if (item is Sword sword)
             {
-               RemoveItemFromInventory(weapon);
+               sword.Durability--;
+               if (sword.Durability == 0)
+               {
+                  RemoveItemFromInventory(sword);
+               }
+               damage = (uint)_random.Next((int)sword.Damage, (int)sword.MaxDamage);
             }
-            return BaseDamage + (uint)_random.Next((int) weapon.Damage, (int) weapon.MaxDamage);
+            else if (item is Bow bow)
+            {
+               bow.Durability--;
+               bow.ArrowsCount--;
+               if (bow.Durability == 0 || bow.ArrowsCount == 0)
+               {
+                  RemoveItemFromInventory(bow);
+               }
+               damage = (uint)_random.Next((int)bow.Damage, (int)bow.MaxDamage);
+            }
+
+
+            return BaseDamage + damage;
          }
          return BaseDamage;
       }
@@ -58,6 +76,8 @@ namespace LosevD_GUN39_GUNPC.Units
 
       protected override uint CalculateAppliedDamage(uint damage)
       {
+         uint defenceSum = 0;
+
          if (_equipment.TryGetValue(EquipSlot.Armour, out var item) && item is Armour armour)
          {
             armour.Durability--;
@@ -65,8 +85,19 @@ namespace LosevD_GUN39_GUNPC.Units
             {
                RemoveItemFromInventory(armour);
             }
-            damage -= (uint)(damage * (armour.Defence / 100f));
-         }   
+            defenceSum += armour.Defence;
+         }
+         if (_equipment.TryGetValue(EquipSlot.Helmet, out item) && item is Helmet helmet)
+         {
+            helmet.Durability--;
+            if (helmet.Durability == 0)
+            {
+               RemoveItemFromInventory(helmet);
+            }
+            defenceSum += helmet.Defence;
+         }
+         damage -= (uint)(damage * (defenceSum / 100f));
+
          return damage;
       }
 
@@ -106,6 +137,30 @@ namespace LosevD_GUN39_GUNPC.Units
          for (int i = 0; i < items.Count; i++)
          {
             builder.Append($"[{items[i].Name}] : {items[i].Amount}");
+         }
+      }
+
+      public EquipItem? GetEquippedItem(EquipSlot slot)
+      {
+         _equipment.TryGetValue(slot, out EquipItem? equipItem);
+
+         return equipItem;
+      }
+
+      public void EquipOrReplace(EquipItem newItem)
+      {
+         EquipSlot slot = newItem.Slot;
+
+         if (_equipment.TryGetValue(slot, out EquipItem item))
+         {
+            Console.Write($"Item was replaced from {_equipment[slot].Name} ");
+            _equipment[slot] = newItem;
+            Console.Write($"to {newItem.Name}!");
+         }
+         else
+         {
+            _equipment.Add(slot, newItem);
+            Console.Write($"Item {newItem.Name} was equipped!");
          }
       }
 
