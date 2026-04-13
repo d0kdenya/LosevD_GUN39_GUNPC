@@ -9,7 +9,7 @@ namespace LosevD_GUN39_GUNPC.Utils
 
          line = line?.Trim() ?? "";
 
-         if (line.Length == 0 || line[0] != '-')
+         if (line.Length <= 2 || line[0] != '-')
          {
             return false;
          }

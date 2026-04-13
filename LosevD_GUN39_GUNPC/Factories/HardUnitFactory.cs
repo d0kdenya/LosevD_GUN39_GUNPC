@@ -9,7 +9,7 @@ namespace LosevD_GUN39_GUNPC.Factories
    {
       public Unit CreatePlayer(string name)
       {
-         Player player = new Player(name, 10, 10, 2);
+         Player player = new Player(name, 100, 100, 2);
 
          Bow bow = new Bow(5, 10, 10, 10, "Bow");
          Armour armour = new Armour(10, 15, "Armour");

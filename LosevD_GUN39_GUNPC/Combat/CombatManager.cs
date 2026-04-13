@@ -14,6 +14,8 @@ namespace LosevD_GUN39_GUNPC.Combat
       {
          direction = "";
 
+         Console.WriteLine("\nYou finded a Goblin. Fight him!\n");
+
          while (player.Health > 0 && enemy.Health > 0)
          {
             Console.WriteLine(GetCombatString());
