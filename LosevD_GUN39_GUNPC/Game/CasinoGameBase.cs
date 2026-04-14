@@ -2,11 +2,11 @@
 {
    public abstract class CasinoGameBase
    {
-      public event Action OnWin;
+      public event Action? OnWin;
 
-      public event Action OnLoose;
+      public event Action? OnLoose;
 
-      public event Action OnDraw;
+      public event Action? OnDraw;
 
       public abstract void PlayGame();
 

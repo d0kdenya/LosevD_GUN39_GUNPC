@@ -34,11 +34,15 @@ namespace LosevD_GUN39_GUNPC.Game
 
          foreach (Dice dice in _dices)
          {
-            playerScore += dice.Number;
+            int roll = dice.Number;
+            Console.WriteLine("Player rolled: " + roll);
+            playerScore += roll;
          }
          foreach (Dice dice in _dices)
          {
-            computerScore += dice.Number;
+            int roll = dice.Number;
+            Console.WriteLine("Computer rolled: " + roll);
+            computerScore += roll;
          }
 
          Console.WriteLine("Final score: ");

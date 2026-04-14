@@ -1,4 +1,6 @@
-﻿namespace LosevD_GUN39_GUNPC.Files
+﻿using System.IO;
+
+namespace LosevD_GUN39_GUNPC.Files
 {
    public sealed class FileSystemSaveLoadService : ISaveLoadService<string>
    {
@@ -6,21 +8,36 @@
 
       public FileSystemSaveLoadService(string path)
       {
-         if (!Directory.Exists(path))
+         string fullPath = Directory.GetCurrentDirectory() + $"\\{path}";
+
+         if (!Directory.Exists(fullPath))
          {
-            Directory.CreateDirectory(path);
+            Directory.CreateDirectory(fullPath);
          }
-         _path = path;
+         _path = fullPath;
       }
 
       public void SaveData(string data, string id)
       {
          string fullPath = GetFullPath(id);
 
+         File.AppendAllText(fullPath, $"{data}\n");
+      }
+
+      public void SaveProfile(string data, string id)
+      {
+         string fullPath = GetFullPath(id);
+
+         string[] parts = data.Split('\n');
+
          using (StreamWriter stream = File.CreateText(fullPath))
          {
-            stream.Write(data);
+            foreach (string part in parts)
+            {
+               stream.WriteLine(part);
+            }
          }
+         
       }
 
       public string LoadData(string id)
